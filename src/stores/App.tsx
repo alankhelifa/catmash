@@ -5,6 +5,7 @@ import catsData from 'assets/cats.json';
 import { Elo } from 'types/Elo';
 
 const START_ELO = 1000;
+const LOADING_SCREEN_DURATION = 2500;
 
 const init = async (): Promise<Cats> => {
   const currentElo: Elo = { value: START_ELO, date: new Date() };
@@ -17,7 +18,11 @@ const init = async (): Promise<Cats> => {
     })),
   );
 
-  return await db.cats.toArray();
+  return new Promise<Cats>(resolve => {
+    setTimeout(() => {
+      resolve(db.cats.toArray());
+    }, 1200);
+  });
 };
 
 export const APP_STATE = {
@@ -41,8 +46,12 @@ export const AppProvider: React.FC = ({ children }) => {
   const [cats, setCats] = useState<Cats>([]);
 
   useEffect(() => {
-    const loadCats = async (): Promise<Cats> => {
-      return await db.cats.toArray();
+    const loadCats = (): Promise<Cats> => {
+      return new Promise<Cats>(resolve => {
+        setTimeout(() => {
+          resolve(db.cats.toArray());
+        }, LOADING_SCREEN_DURATION);
+      });
     };
 
     if (cats.length === 0) {

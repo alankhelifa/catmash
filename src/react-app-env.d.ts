@@ -5,3 +5,9 @@ declare module 'assets/cats.json' {
   const catsData: Array<string>;
   export default catsData;
 }
+
+declare module 'assets/loader.gif' {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const loadingGif: any;
+  export default loadingGif;
+}

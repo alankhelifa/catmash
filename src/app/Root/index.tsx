@@ -1,11 +1,5 @@
 import React from 'react';
 
-const Index = () => {
-  return (
-      <div>
-          
-          </div>
-  );
+export const Root: React.FC = () => {
+  return <div />;
 };
-
-export default Index;
