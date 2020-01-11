@@ -5,7 +5,10 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Une application web qui permet de trouver le chat le plus mignon" />
+    <meta
+      name="description"
+      content="Une application web qui permet de trouver le chat le plus mignon"
+    />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
@@ -35,13 +38,47 @@
         width: 100%;
         margin: 0;
         font-size: 16px;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Droid Sans',
-        'Helvetica Neue', sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Oxygen", "Droid Sans", "Helvetica Neue", sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+
+        --spacing-unit: 8px;
+        --spacing-unit-2: 16px;
+        --spacing-unit-3: 24px;
+
+        --outlined-box-shadow: 0px 0px 2px 0 rgba(60, 64, 67, 0.5);
+        --box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.08),
+          0 1px 3px 1px rgba(0, 0, 0, 0.16);
+        --raised-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2),
+          0 4px 16px rgba(0, 0, 0, 0.2);
+
+        --primary-color: #eeeeee;
+        --secondary-color: #fafafa;
+        --tertiary-color: #232921;
+        --accent-color: #3579dc;
+        --error-color: #b55e43;
+        --text-color: #000000;
+
+        transition: background-color 0.3s ease, color 0.3s ease;
+        background-color: var(--primary-color);
       }
 
-      h1, h2, h3, h4, h5, h6 {
+      body.dark-mode {
+        --primary-color: #232931;
+        --secondary-color: #393e46;
+        --tertiary-color: #eeeeee;
+        --accent-color: #9400d3;
+        --error-color: #b55e43;
+        --text-color: #ffffff;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
         margin: 0;
       }
 
@@ -68,9 +105,7 @@
       p {
         margin: 0;
       }
-
     </style>
-
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
