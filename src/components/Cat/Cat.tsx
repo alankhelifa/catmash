@@ -12,8 +12,8 @@ const styles = css`
   box-shadow: var(--box-shadow);
 
   @media screen and (min-width: 992px) {
-    height: 200px;
-    width: 200px;
+    height: 240px;
+    width: 240px;
   }
 
   > div {
