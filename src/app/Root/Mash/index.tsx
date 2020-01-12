@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import catLogo from '../../../assets/cat-logo.png';
 
 const variants = {
   enter: {
@@ -16,8 +17,13 @@ const variants = {
 
 export const Mash: React.FC = () => {
   return (
-    <motion.div animate="enter" exit="exit" variants={variants}>
-      Mash<Link to="/ranking">Classement</Link>
-    </motion.div>
+    <motion.section animate="enter" exit="exit" variants={variants}>
+      <header>
+        <img src={catLogo} alt="Logo CatMash" />
+      </header>
+      <main>
+        Mash<Link to="/ranking">Classement</Link>
+      </main>
+    </motion.section>
   );
 };

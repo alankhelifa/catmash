@@ -6,7 +6,7 @@ import { Cat as CatType } from 'types/cat';
 const styles = css`
   height: 120px;
   width: 120px;
-  padding: var(--spacing-unit);
+  padding: 6px;
   border-radius: 50%;
   background-color: var(--secondary-color);
   box-shadow: var(--box-shadow);
@@ -40,7 +40,7 @@ export const Cat: React.FC<Props> = ({ className, id, image, onClick, variants }
 
   return (
     <motion.div
-      className={cx(styles, className)}
+      className={cx(styles, className, 'cat')}
       onClick={handleClick}
       initial="init"
       animate="enter"
