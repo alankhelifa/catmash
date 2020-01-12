@@ -5,8 +5,6 @@ import { Cat, ScrollView } from 'components';
 import { useApp } from 'stores';
 
 const styles = css`
-  height: 100%;
-  width: 100%;
   overflow: hidden;
 
   h1 {
@@ -18,13 +16,17 @@ const styles = css`
   ul {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(6, auto);
+    grid-template-columns: repeat(4, auto);
     grid-gap: var(--spacing-unit-3);
     grid-auto-rows: auto;
     justify-content: center;
     margin-bottom: 64px;
 
     @media (min-width: 992px) {
+      grid-template-columns: repeat(6, auto);
+    }
+
+    @media (min-width: 1200px) {
       grid-template-columns: repeat(8, auto);
     }
 
@@ -107,9 +109,16 @@ export const Ranking: React.FC = () => {
           <div>
             <h1>Classement des chats les plus mignons</h1>
           </div>
-          <motion.ul animate="enter" exit="exit" variants={listVariants} key="list">
+          <motion.ul animate="enter" exit="exit" variants={listVariants} key="list" layoutTransition>
             {cats.map((cat, index) => (
-              <motion.li key={cat.id} animate="enter" exit="exit" variants={itemVariants} custom={index}>
+              <motion.li
+                key={cat.id}
+                animate="enter"
+                exit="exit"
+                variants={itemVariants}
+                custom={index}
+                layoutTransition
+              >
                 <Cat {...cat} />
                 <span>{index + 1}</span>
               </motion.li>

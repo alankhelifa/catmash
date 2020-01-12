@@ -20,11 +20,13 @@ const styles = css`
   height: 3px;
   background-color: var(--secondary-color);
   position: relative;
+  border-radius: 2px;
 
   > .progress-bar {
     position: absolute;
     height: 100%;
     background-image: linear-gradient(to right, #3579d7, #3f6bdf, #585ae1, #7640de, #9400d3);
+    border-radius: 2px;
   }
 `;
 
