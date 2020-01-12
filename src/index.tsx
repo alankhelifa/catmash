@@ -11,4 +11,8 @@ ReactDOM.render(
   document.getElementById('root'),
 );
 
+setTimeout(() => {
+  document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+}, 1000);
+
 serviceWorker.unregister();
