@@ -63,7 +63,6 @@ export const AppProvider: React.FC = ({ children }) => {
         }
       });
     } else {
-      setCats(cats);
       setAppState(APP_STATE.READY);
     }
   }, [cats]);

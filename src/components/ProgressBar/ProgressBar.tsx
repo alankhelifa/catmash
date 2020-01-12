@@ -45,5 +45,3 @@ export const ProgressBar: React.FC<Props> = ({ duration }) => {
     </div>
   );
 };
-
-export default ProgressBar;
