@@ -14,9 +14,9 @@ const init = async (): Promise<Cats> => {
   const eloEvolution = [currentElo];
 
   await db.cats.bulkAdd(
-    //Auto-incremented id
+    // Auto-incremented id
     // eslint-disable-next-line
-    //@ts-ignore
+    // @ts-ignore
     catsData.map(image => ({
       image,
       currentElo,

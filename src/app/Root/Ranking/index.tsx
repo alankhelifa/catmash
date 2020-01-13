@@ -1,60 +1,76 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { css } from 'emotion';
 import { motion, Variant } from 'framer-motion';
-import { Cat, ScrollView } from 'components';
+import { BackButton, Cat, ScrollView } from 'components';
 import { useApp } from 'stores';
-import { Cats } from "types/cat";
+import { Cats } from 'types/cat';
+import { Link } from 'react-router-dom';
 
 const styles = css`
   overflow: hidden;
 
-  h1 {
-    font-size: 2rem;
-    text-align: center;
-    margin: 4rem;
-  }
-
-  ul {
+  main {
+    position:relative;
+    align-self: center;
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    grid-gap: var(--spacing-unit-3);
-    grid-auto-rows: auto;
-    justify-content: center;
-    margin-bottom: 64px;
-
-    @media (min-width: 992px) {
-      grid-template-columns: repeat(6, auto);
+    max-width: 1400px;
+    padding-top: var(--spacing-unit-3);
+    
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+      margin: 4rem;
+      background: -webkit-linear-gradient(0deg, #3579d7, #3f6bdf, #585ae1, #7640de, #9400d3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    @media (min-width: 1200px) {
-      grid-template-columns: repeat(8, auto);
-    }
+    ul {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      grid-gap: var(--spacing-unit-3);
+      grid-auto-rows: auto;
+      justify-content: center;
+      margin-bottom: 64px;
 
-    > li {
-      display: flex;
-      flex-direction: column;
-
-      > span {
-        padding: var(--spacing-unit-2);
-        text-align: center;
+      @media (min-width: 500px) {
+        grid-template-columns: repeat(4, auto);
       }
 
-      > .cat {
-        height: 100px;
-        width: 100px;
+      @media (min-width: 992px) {
+        grid-template-columns: repeat(6, auto);
       }
 
-      &:nth-child(1) > .cat {
-        background-color: goldenrod;
+      @media (min-width: 1200px) {
+        grid-template-columns: repeat(8, auto);
       }
 
-      &:nth-child(2) > .cat {
-        background-color: silver;
-      }
+      > li {
+        display: flex;
+        flex-direction: column;
 
-      &:nth-child(3) > .cat {
-        background-color: #905923;
+        > span {
+          padding: var(--spacing-unit-2);
+          text-align: center;
+        }
+
+        > a > .cat {
+          height: 100px;
+          width: 100px;
+        }
+
+        &:nth-child(1) > a > .cat {
+          background-color: goldenrod;
+        }
+
+        &:nth-child(2) > a > .cat {
+          background-color: silver;
+        }
+
+        &:nth-child(3) > a > .cat {
+          background-color: #905923;
+        }
       }
     }
   }
@@ -82,6 +98,7 @@ const listVariants = {
 };
 
 const itemVariants = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   enter: (position: number): any => ({
     y: 0,
     opacity: 1,
@@ -100,6 +117,12 @@ const itemVariants = {
   },
 };
 
+const catVariants = {
+  tap: {
+    scale: 1.2,
+  },
+};
+
 export const Ranking: React.FC = () => {
   const { getCats } = useApp();
   const [cats, setCats] = useState<Cats>();
@@ -112,23 +135,27 @@ export const Ranking: React.FC = () => {
     <ScrollView>
       <motion.section className={styles} animate="enter" exit="exit" variants={variants}>
         <main>
+          <BackButton to="/" />
           <div>
             <h1>Classement des chats les plus mignons</h1>
           </div>
           <motion.ul animate="enter" exit="exit" variants={listVariants} key="list">
-            {cats && cats.map((cat, index) => (
-              <motion.li
-                key={cat.id}
-                animate="enter"
-                exit="exit"
-                variants={itemVariants}
-                custom={index}
-                positionTransition
-              >
-                <Cat {...cat} />
-                <span>{index + 1}</span>
-              </motion.li>
-            ))}
+            {cats &&
+              cats.map((cat, index) => (
+                <motion.li
+                  key={cat.id}
+                  animate="enter"
+                  exit="exit"
+                  variants={itemVariants}
+                  custom={index}
+                  positionTransition
+                >
+                  <Link to={`/cat/${cat.id}`}>
+                    <Cat {...cat} variants={catVariants} />
+                  </Link>
+                  <span>{index + 1}</span>
+                </motion.li>
+              ))}
           </motion.ul>
         </main>
       </motion.section>

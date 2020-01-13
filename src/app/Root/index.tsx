@@ -4,6 +4,7 @@ import { css } from 'emotion';
 import { useLocation, Route, Switch } from 'react-router-dom';
 import { Mash } from './Mash';
 import { Ranking } from './Ranking';
+import { CatDetails } from './CatDetails';
 
 const styles = css`
   height: 100%;
@@ -54,6 +55,7 @@ export const Root: React.FC = () => {
         <Switch location={location} key={location.pathname}>
           <Route exact path="/" component={Mash} />
           <Route exact path="/ranking" component={Ranking} />
+          <Route exact path="/cat/:id" component={CatDetails} />
         </Switch>
       </AnimatePresence>
     </motion.div>
