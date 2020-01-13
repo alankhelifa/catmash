@@ -98,7 +98,12 @@ export const AppProvider: React.FC = ({ children }) => {
     getCats().then(cats => {
       const leftPosition = random(cats.length);
       const left = cats[leftPosition];
-      const right = cats[Math.min(leftPosition + random(8) + 1, cats.length - 1)];
+      const right =
+        cats[
+          leftPosition === cats.length - 1
+            ? leftPosition - random(8) - 1
+            : Math.min(leftPosition + random(8) + 1, cats.length - 1)
+        ];
       setMash({ left, right });
     });
   }, [getCats]);
@@ -126,7 +131,9 @@ export const AppProvider: React.FC = ({ children }) => {
   }, [appState, nextMash]);
 
   return (
-    <AppContext.Provider value={{ appState, mash, nextMash, getCat, getCats, updateScore }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ appState, mash, nextMash, getCat, getCats, updateScore }}>
+      {children}
+    </AppContext.Provider>
   );
 };
 
