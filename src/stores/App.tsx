@@ -39,62 +39,54 @@ export const APP_STATE = {
 
 type AppContextType = {
   appState: string;
-  cats: Cats;
   mash?: Mash;
   nextMash: Function;
+  getCats: () => Promise<Cats>;
 };
 
 export const AppContext = React.createContext<AppContextType>({
   appState: APP_STATE.LOADING,
-  cats: [],
   mash: {} as Mash,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   nextMash: () => {},
+  getCats: () => Promise.resolve([] as Cats),
 });
 
 export const AppProvider: React.FC = ({ children }) => {
   const [appState, setAppState] = useState(APP_STATE.LOADING);
-  const [cats, setCats] = useState<Cats>([]);
   const [mash, setMash] = useState<Mash>();
 
+  const getCats = useCallback((): Promise<Cats> => {
+    return db.cats.reverse().sortBy('currentElo.value');
+  }, []);
+
   const nextMash = useCallback(() => {
-    setMash({ left: cats[random(cats.length)], right: cats[random(cats.length)] });
-  }, [cats]);
+    getCats().then(cats => setMash({ left: cats[random(cats.length)], right: cats[random(cats.length)] }));
+  }, [getCats]);
 
   useEffect(() => {
-    const loadCats = (): Promise<Cats> => {
-      return new Promise<Cats>(resolve => {
+    if (appState === APP_STATE.LOADING) {
+      new Promise<number>(resolve => {
         setTimeout(() => {
-          resolve(db.cats.toArray());
+          resolve(db.cats.count());
         }, LOADING_SCREEN_DURATION);
-      });
-    };
-
-    if (cats.length === 0) {
-      loadCats().then(cats => {
-        if (cats.length !== 0) {
-          setCats(cats);
-        } else {
+      }).then(count => {
+        if (count === 0) {
           setAppState(APP_STATE.INITIALISING);
+        } else {
+          nextMash();
+          setAppState(APP_STATE.READY);
         }
       });
-    } else {
-      nextMash();
-      setAppState(APP_STATE.READY);
-    }
-  }, [cats, nextMash]);
-
-  useEffect(() => {
-    if (appState === APP_STATE.INITIALISING) {
-      init().then(cats => {
-        setCats(cats);
+    } else if (appState === APP_STATE.INITIALISING) {
+      init().then(() => {
         nextMash();
         setAppState(APP_STATE.READY);
       });
     }
   }, [appState, nextMash]);
 
-  return <AppContext.Provider value={{ appState, cats, mash, nextMash }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ appState, mash, nextMash, getCats }}>{children}</AppContext.Provider>;
 };
 
 export const useApp = (): AppContextType => React.useContext(AppContext);

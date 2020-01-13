@@ -127,7 +127,6 @@ export const Mash: React.FC = () => {
 
   const handleClick = useCallback(
     (id: number | undefined) => {
-      console.log(id);
       nextMash();
     },
     [nextMash],

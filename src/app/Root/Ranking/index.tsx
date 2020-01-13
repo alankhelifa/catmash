@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { css } from 'emotion';
 import { motion, Variant } from 'framer-motion';
 import { Cat, ScrollView } from 'components';
 import { useApp } from 'stores';
+import { Cats } from "types/cat";
 
 const styles = css`
   overflow: hidden;
@@ -100,7 +101,12 @@ const itemVariants = {
 };
 
 export const Ranking: React.FC = () => {
-  const { cats } = useApp();
+  const { getCats } = useApp();
+  const [cats, setCats] = useState<Cats>();
+
+  useEffect(() => {
+    getCats().then(setCats);
+  }, [getCats]);
 
   return (
     <ScrollView>
@@ -109,15 +115,15 @@ export const Ranking: React.FC = () => {
           <div>
             <h1>Classement des chats les plus mignons</h1>
           </div>
-          <motion.ul animate="enter" exit="exit" variants={listVariants} key="list" layoutTransition>
-            {cats.map((cat, index) => (
+          <motion.ul animate="enter" exit="exit" variants={listVariants} key="list">
+            {cats && cats.map((cat, index) => (
               <motion.li
                 key={cat.id}
                 animate="enter"
                 exit="exit"
                 variants={itemVariants}
                 custom={index}
-                layoutTransition
+                positionTransition
               >
                 <Cat {...cat} />
                 <span>{index + 1}</span>
