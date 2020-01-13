@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { css, cx } from 'emotion';
 import { motion, Variants } from 'framer-motion';
-import { Cat as CatType } from 'types/cat';
 
 const styles = css`
   height: 120px;
@@ -25,9 +24,11 @@ const styles = css`
   }
 `;
 
-interface Props extends CatType {
+interface Props {
   className?: string;
-  onClick?: (id: number | undefined) => void | undefined;
+  id: number;
+  image: string;
+  onClick?: (id: number) => void;
   variants?: Variants;
 }
 

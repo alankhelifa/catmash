@@ -121,15 +121,15 @@ const rightVariants = {
 };
 
 export const Mash: React.FC = () => {
-  const { mash, nextMash } = useApp();
+  const { mash, nextMash, updateScore } = useApp();
   const left = mash?.left as CatType;
   const right = mash?.right as CatType;
 
   const handleClick = useCallback(
-    (id: number | undefined) => {
-      nextMash();
+    (id: number) => {
+      updateScore(id).then(() => nextMash());
     },
-    [nextMash],
+    [nextMash, updateScore],
   );
 
   return (
