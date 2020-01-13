@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Cats } from 'types/cat';
+import { Cat, Cats } from 'types/cat';
 import db from 'database';
 import catsData from 'assets/cats.json';
 import { Elo } from 'types/Elo';
@@ -44,6 +44,7 @@ export const APP_STATE = {
 type AppContextType = {
   appState: string;
   getCats: () => Promise<Cats>;
+  getCat: (id: number) => Promise<Cat | undefined>;
   mash?: Mash;
   nextMash: Function;
   updateScore: (winnerId: number) => Promise<void>;
@@ -56,6 +57,7 @@ export const AppContext = React.createContext<AppContextType>({
   nextMash: () => {},
   updateScore: () => Promise.resolve(),
   getCats: () => Promise.resolve([] as Cats),
+  getCat: () => Promise.resolve({} as Cat),
 });
 
 export const AppProvider: React.FC = ({ children }) => {
@@ -86,6 +88,10 @@ export const AppProvider: React.FC = ({ children }) => {
 
   const getCats = useCallback((): Promise<Cats> => {
     return db.cats.reverse().sortBy('currentElo.value');
+  }, []);
+
+  const getCat = useCallback((id): Promise<Cat | undefined> => {
+    return db.cats.get(id);
   }, []);
 
   const nextMash = useCallback(() => {
@@ -120,7 +126,7 @@ export const AppProvider: React.FC = ({ children }) => {
   }, [appState, nextMash]);
 
   return (
-    <AppContext.Provider value={{ appState, mash, nextMash, getCats, updateScore }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ appState, mash, nextMash, getCat, getCats, updateScore }}>{children}</AppContext.Provider>
   );
 };
 
