@@ -1,4 +1,5 @@
 import Dexie from 'dexie';
+import 'dexie-observable';
 import { Cat } from 'types/cat';
 
 class CatMashDatabase extends Dexie {

@@ -5,17 +5,18 @@ import { BackButton, Cat, ScrollView } from 'components';
 import { useApp } from 'stores';
 import { Cats } from 'types/cat';
 import { Link } from 'react-router-dom';
+import db from 'database';
 
 const styles = css`
   overflow: hidden;
 
   main {
-    position:relative;
+    position: relative;
     align-self: center;
     width: 100%;
     max-width: 1400px;
     padding-top: var(--spacing-unit-3);
-    
+
     h1 {
       font-size: 2rem;
       text-align: center;
@@ -123,12 +124,25 @@ const catVariants = {
   },
 };
 
+const spring = {
+  type: 'spring',
+  damping: 60,
+  stiffness: 300,
+};
+
 export const Ranking: React.FC = () => {
   const { getCats } = useApp();
   const [cats, setCats] = useState<Cats>();
 
   useEffect(() => {
-    getCats().then(setCats);
+    const load = (): void => {
+      getCats().then(setCats);
+    };
+
+    load();
+    db.on('changes', load);
+
+    return (): void => db.on('changes').unsubscribe(load);
   }, [getCats]);
 
   return (
@@ -148,7 +162,7 @@ export const Ranking: React.FC = () => {
                   exit="exit"
                   variants={itemVariants}
                   custom={index}
-                  positionTransition
+                  positionTransition={spring}
                 >
                   <Link to={`/cat/${cat.id}`}>
                     <Cat {...cat} variants={catVariants} />
