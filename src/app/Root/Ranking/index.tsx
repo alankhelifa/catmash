@@ -11,12 +11,6 @@ const styles = css`
   overflow: hidden;
 
   main {
-    position: relative;
-    align-self: center;
-    width: 100%;
-    max-width: 1400px;
-    padding-top: var(--spacing-unit-3);
-
     h1 {
       font-size: 2rem;
       text-align: center;

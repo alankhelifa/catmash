@@ -138,16 +138,20 @@ export const Mash: React.FC = () => {
         <img src={catLogo} alt="Logo CatMash" />
       </header>
       <main>
-        <div className="cat-container">
-          <AnimatePresence exitBeforeEnter>
-            <Cat {...left} onClick={handleClick} key={left.id} variants={leftVariants} />
-          </AnimatePresence>
-        </div>
-        <div className="cat-container">
-          <AnimatePresence exitBeforeEnter>
-            <Cat {...right} onClick={handleClick} key={right.id} variants={rightVariants} />
-          </AnimatePresence>
-        </div>
+        {left && (
+          <>
+            <div className="cat-container">
+              <AnimatePresence exitBeforeEnter>
+                <Cat {...left} onClick={handleClick} key={left.id} variants={leftVariants} />
+              </AnimatePresence>
+            </div>
+            <div className="cat-container">
+              <AnimatePresence exitBeforeEnter>
+                <Cat {...right} onClick={handleClick} key={right.id} variants={rightVariants} />
+              </AnimatePresence>
+            </div>
+          </>
+        )}
         <div className="ranking-link-container">
           <Link to="/ranking">Voir le classement</Link>
         </div>

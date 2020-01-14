@@ -43,10 +43,10 @@ const styles = css`
   }
 `;
 
-export const BackButton: React.FC<Props> = () => {
+export const BackButton: React.FC<Props> = ({ to }) => {
   return (
     <motion.span initial="initial" animate="enter" exit="exit" className={styles} variants={variants}>
-      <Link to="/">←</Link>
+      <Link to={to}>←</Link>
     </motion.span>
   );
 };

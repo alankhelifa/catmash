@@ -90,9 +90,19 @@ export const AppProvider: React.FC = ({ children }) => {
     return db.cats.reverse().sortBy('currentElo.value');
   }, []);
 
-  const getCat = useCallback((id): Promise<Cat | undefined> => {
-    return db.cats.get(id);
-  }, []);
+  const getCat = useCallback(
+    (id): Promise<Cat | undefined> => {
+      return getCats().then(cats => {
+        const catIndex = cats.findIndex(cat => cat.id === id);
+        if (catIndex === -1) {
+          return undefined;
+        }
+        cats[catIndex].rank = catIndex + 1;
+        return cats[catIndex];
+      });
+    },
+    [getCats],
+  );
 
   const nextMash = useCallback(() => {
     getCats().then(cats => {
