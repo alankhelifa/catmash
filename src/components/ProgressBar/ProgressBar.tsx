@@ -4,6 +4,7 @@ import { css, cx } from 'emotion';
 
 const progressVariants = {
   init: { width: 0 },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   animate: (duration: number): any => ({
     width: '100%',
     transition: {
@@ -15,7 +16,7 @@ const progressVariants = {
 };
 
 const styles = css`
-  width: 90%;
+  width: 60%;
   max-width: 360px;
   height: 3px;
   background-color: var(--secondary-color);

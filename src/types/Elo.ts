@@ -6,4 +6,4 @@ export type Elo = {
 export type EloResult = {
   winner: Elo;
   loser: Elo;
-}
+};

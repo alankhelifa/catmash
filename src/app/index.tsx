@@ -1,11 +1,9 @@
 import React from 'react';
 import useDarkMode from 'use-dark-mode';
 import { AnimatePresence } from 'framer-motion';
-import { APP_STATE, useApp } from 'stores/App';
+import { APP_STATE, LOADING_SCREEN_DURATION, useApp } from 'stores/App';
 import { LoadingPage } from './LoadingPage';
 import { Root } from './Root';
-
-const TRANSITION = 2500;
 
 export const App: React.FC = () => {
   useDarkMode();
@@ -16,7 +14,7 @@ export const App: React.FC = () => {
       {(appState === APP_STATE.LOADING || appState === APP_STATE.INITIALISING) && (
         <LoadingPage
           key={APP_STATE.LOADING}
-          timeout={TRANSITION}
+          timeout={LOADING_SCREEN_DURATION}
           label={appState === APP_STATE.INITIALISING ? 'Création des profils...' : undefined}
         />
       )}

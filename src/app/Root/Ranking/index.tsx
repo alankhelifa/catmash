@@ -20,7 +20,50 @@ const styles = css`
       -webkit-text-fill-color: transparent;
     }
 
-    ul {
+    .cat {
+      background-image: none;
+      background-color: var(--secondary-color);
+    }
+
+    ul > li > a {
+      border-radius: 50%;
+    }
+
+    ul.podium {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 1000px;
+      margin: auto auto var(--spacing-unit-5);
+
+      li {
+        display: flex;
+        justify-content: center;
+
+        &:nth-child(1) {
+          width: 100%;
+          > a > .cat {
+            background-color: goldenrod;
+          }
+        }
+
+        &:nth-child(2) {
+          width: 50%;
+          > a > .cat {
+            background-color: silver;
+          }
+        }
+
+        &:nth-child(3) {
+          width: 50%;
+          > a > .cat {
+            background-color: #905923;
+          }
+        }
+      }
+    }
+
+    ul.list {
       width: 100%;
       display: grid;
       grid-template-columns: repeat(3, auto);
@@ -53,18 +96,6 @@ const styles = css`
         > a > .cat {
           height: 100px;
           width: 100px;
-        }
-
-        &:nth-child(1) > a > .cat {
-          background-color: goldenrod;
-        }
-
-        &:nth-child(2) > a > .cat {
-          background-color: silver;
-        }
-
-        &:nth-child(3) > a > .cat {
-          background-color: #905923;
         }
       }
     }
@@ -147,11 +178,12 @@ export const Ranking: React.FC = () => {
           <div>
             <h1>Classement des chats les plus mignons</h1>
           </div>
-          <motion.ul animate="enter" exit="exit" variants={listVariants} key="list">
+          <motion.ul className="podium" animate="enter" exit="exit" variants={listVariants} key="podium">
             {cats &&
-              cats.map((cat, index) => (
+              cats.slice(0, 3).map((cat, index) => (
                 <motion.li
                   key={cat.id}
+                  initial="exit"
                   animate="enter"
                   exit="exit"
                   variants={itemVariants}
@@ -161,7 +193,25 @@ export const Ranking: React.FC = () => {
                   <Link to={`/cat/${cat.id}`}>
                     <Cat {...cat} variants={catVariants} />
                   </Link>
-                  <span>{index + 1}</span>
+                </motion.li>
+              ))}
+          </motion.ul>
+          <motion.ul className="list" animate="enter" exit="exit" variants={listVariants} key="list">
+            {cats &&
+              cats.slice(3).map((cat, index) => (
+                <motion.li
+                  key={cat.id}
+                  initial="exit"
+                  animate="enter"
+                  exit="exit"
+                  variants={itemVariants}
+                  custom={index}
+                  positionTransition={spring}
+                >
+                  <Link to={`/cat/${cat.id}`}>
+                    <Cat {...cat} variants={catVariants} />
+                  </Link>
+                  <span>{index + 4}</span>
                 </motion.li>
               ))}
           </motion.ul>

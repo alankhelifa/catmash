@@ -7,12 +7,16 @@ const styles = css`
   width: 120px;
   padding: 6px;
   border-radius: 50%;
-  background-color: var(--secondary-color);
+  background-image: linear-gradient(to top right, #3579d7, #3f6bdf, #585ae1, #7640de, #9400d3);
   box-shadow: var(--box-shadow);
 
   @media screen and (min-width: 992px) {
     height: 240px;
     width: 240px;
+  }
+
+  &.clickable {
+    cursor: pointer;
   }
 
   > div {
@@ -41,7 +45,7 @@ export const Cat: React.FC<Props> = ({ className, id, image, onClick, variants }
 
   return (
     <motion.div
-      className={cx(styles, className, 'cat')}
+      className={cx(styles, className, typeof onClick === 'function' && 'clickable', 'cat')}
       onClick={handleClick}
       initial="init"
       animate="enter"

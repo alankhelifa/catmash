@@ -7,7 +7,7 @@ import { Mash } from 'types/Mash';
 import { updateElo } from './elo-utils';
 
 const START_ELO = 1000;
-const LOADING_SCREEN_DURATION = 2500;
+export const LOADING_SCREEN_DURATION = 1500;
 
 const init = async (): Promise<Cats> => {
   const currentElo: Elo = { value: START_ELO, date: new Date() };

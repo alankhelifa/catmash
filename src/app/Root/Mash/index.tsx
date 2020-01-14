@@ -13,23 +13,23 @@ const styles = css`
   > main {
     position: relative;
     display: flex;
-    max-width: 1200px;
+    flex-direction: column;
+    max-width: 800px;
     width: 100%;
     margin: auto;
+    overflow: visible !important;
 
-    > .cat-container {
-      flex: 1;
-      padding-top: 128px;
+    h2 {
+      margin: 3rem;
+      text-align: center;
+    }
+
+    > div {
       display: flex;
+      justify-content: space-evenly;
 
-      &:first-of-type {
-        padding-right: 120px;
-        justify-content: flex-end;
-      }
-
-      &:last-of-type {
-        padding-left: 120px;
-        justify-content: flex-start;
+      > .cat-container {
+        padding-top: 80px;
       }
     }
 
@@ -139,8 +139,9 @@ export const Mash: React.FC = () => {
         <h1>CatMash</h1>
       </header>
       <main>
+        <h2>Choisissez le chat le plus mignon</h2>
         {left && (
-          <>
+          <div>
             <div className="cat-container">
               <AnimatePresence exitBeforeEnter>
                 <Cat {...left} onClick={handleClick} key={left.id} variants={leftVariants} />
@@ -151,7 +152,7 @@ export const Mash: React.FC = () => {
                 <Cat {...right} onClick={handleClick} key={right.id} variants={rightVariants} />
               </AnimatePresence>
             </div>
-          </>
+          </div>
         )}
         <div className="ranking-link-container">
           <Link to="/ranking">Voir le classement</Link>
