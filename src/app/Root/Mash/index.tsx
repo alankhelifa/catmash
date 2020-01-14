@@ -136,6 +136,7 @@ export const Mash: React.FC = () => {
     <motion.section animate="enter" exit="exit" variants={variants} className={styles}>
       <header>
         <img src={catLogo} alt="Logo CatMash" />
+        <h1>CatMash</h1>
       </header>
       <main>
         {left && (
